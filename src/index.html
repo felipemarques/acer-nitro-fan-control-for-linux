@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MM Sense</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * gap:; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; img-src * data: blob: android-webview-video-poster:; style-src * 'unsafe-inline';">
+
+    <style type="text/css">
+      body {
+        color: white;
+        background-image: url('file:///./assets/metal02.jpg');
+      }
+    </style>
+
+    <link rel="stylesheet" href="/assets/style.css" media="all" />
+  </head>
+  <body>
+
+    <!-- <img id="imageBackground1" src="" /> -->
+    <!-- <img id="imageBackground2" src="" /> -->
+
+    <h1>Acer Fan Control</h1>
+    <p>Example app showing how to elevate admin privileges for a child process.</p>
+    <p>We are using Node.js <span id="node-version"></span>, Chromium
+    <span id="chrome-version"></span>, and Electron
+    <span id="electron-version"></span>.</p>
+
+    <h2>whoami</h2>
+    <p>Displays user, group and privileges information for the user who is currently logged on to the local system. If used without parameters, whoami displays the current domain and user name.</p>
+    <div class="buttons">
+
+      <button id="runProcessBtn">run "whoami" process</button>
+      <button id="runProcessElevatedBtn">run "whoami" process elevated</button>
+      <button id="whichNode">run "which" to check whereis the node bin process elevated</button>
+
+      <br><br>
+
+      <div>
+        <button id="nbfcStart">run "nbfc start" process elevated</button><br>
+        <button id="nbfcStop">run "nbfc stop" process elevated</button><br>
+        <button id="nbfcStatus">run "nbfc status -a" process elevated</button><br>
+        
+        <button id="nbfcCPUFan100">run "nbfc set -f 0 -s 100" set CPU Fan 100%</button><br>
+        <button id="nbfcGPUFan100">run "nbfc set -f 1 -s 100" set GPU Fan 100%</button><br>
+
+        <button id="nbfcCPUFanAuto">run "nbfc set -f 0 -a" set CPU Fan auto %</button><br>
+        <button id="nbfcGPUFanAuto">run "nbfc set -f 1 -a" set GPU Fan auto %</button><br>
+        
+        <button id="connectSocket">Connect Socket</button><br>
+
+        <fieldset>
+          <legend>Ryzen 7 - CPU Fan Percent %:</legend>
+          <input type="text" id="CPUfanPercent" />
+          <button id="setCPUFanValue">Set</button>
+        </fieldset>
+
+        <fieldset>
+          <legend>NVIDIA GTX 1650 TI - Fan Percent %:</legend>
+          <input type="text" id="GPUfanPercent" />
+          <button id="setGPUFanValue">Set</button>
+        </fieldset>
+
+      </div>
+
+    </div>
+
+    <h2>Node sub-process</h2>
+    <p>Run a node sub-process with elevated privileges.</p>
+    <div class="buttons">
+      <button id="runProcessNodeBtn">run "node cli.js" sub-process</button>
+      <button id="runProcessNodeElevatedBtn">run "node cli.js" sub-process elevated</button>
+    </div>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="renderer.js"></script>
+  </body>
+</html>
