@@ -1,0 +1,27 @@
+.fan {
+  position: relative;
+  animation: mymove 4s infinite linear;
+}
+
+@keyframes mymove {
+  /*0%   {top: 0px; background: red; width: 100px;}
+  100% {top: 200px; background: yellow; width: 300px;}*/
+  0% { transform: rotate(0deg)}
+  100% { transform: rotate(360deg)}
+}
+
+.circleFan {
+  width: 100px;
+  height: 100px;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  background-color: black;
+  border: 1px solid silver;
+  position: relative;
+  float: left;
+  left: 180px;
+  top: 80px;
+  z-index: 1000;;
+  border-radius: 100%;
+}
