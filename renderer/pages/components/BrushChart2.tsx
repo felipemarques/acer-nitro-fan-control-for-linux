@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Chart from "react-apexcharts";
 
 class BrushChart2 extends Component {
-  constructor(props: {mydata:[]}) {
+  constructor(props: any) {
     super(props);
 
     const data = props.mydata
