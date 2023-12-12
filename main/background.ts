@@ -28,28 +28,28 @@ async function runApp(callback)
       //await util.runProcessElevated(app.getAppPath() + '/main/bin/nbfc status -a && echo 1');
       
       let i = 0;
-      setTimeout(async () => {
-        const nbfcStatus = JSON.parse(await util.runProcess('cat /var/run/nbfc_service.state.json &'));
-        console.log('nbfcStatus >>>>>>>>>>>>>>> ' + i);
-        console.log('Temperature: ', nbfcStatus.temperature);
-        console.log('speed cooler CPU: ', nbfcStatus.fans[0].current_speed);
-        console.log('speed cooler GPU: ', nbfcStatus.fans[1].current_speed);
+      // setTimeout(async () => {
+      //   const nbfcStatus = JSON.parse(await util.runProcess('cat /var/run/nbfc_service.state.json &'));
+      //   console.log('nbfcStatus >>>>>>>>>>>>>>> ' + i);
+      //   console.log('Temperature: ', nbfcStatus.temperature);
+      //   console.log('speed cooler CPU: ', nbfcStatus.fans[0].current_speed);
+      //   console.log('speed cooler GPU: ', nbfcStatus.fans[1].current_speed);
 
-        const status = await util.runProcess('nbfc status -a &');
-        console.log('Status ::::::');
-        console.log(status);
+      //   const status = await util.runProcess('nbfc status -a &');
+      //   console.log('Status ::::::');
+      //   console.log(status);
 
-        // promises style - new since version 3
-        si.cpuTemperature()
-          .then(data => console.log(data))
-          .catch(error => console.error(error));
+      //   // promises style - new since version 3
+      //   si.cpuTemperature()
+      //     .then(data => console.log(data))
+      //     .catch(error => console.error(error));
 
-        si.graphics()
-          .then(data => console.log(data))
-          .catch(error => console.error(error));
+      //   si.graphics()
+      //     .then(data => console.log(data))
+      //     .catch(error => console.error(error));
 
-        i++;
-      }, 2000);
+      //   i++;
+      // }, 2000);
 
     } catch (e) {
       console.error(e)
@@ -144,18 +144,23 @@ runApp(() => {
 
     app.whenReady().then(async () => {
 
-      //console.log('app.path ==>> ', app.getAppPath())
-      //console.log('app.getGPUInfo ==>> ', await app.getGPUInfo('complete'))
-        
+      //console.log('app.getAppPath() ==>> ', app.getAppPath())
+      console.log('app.getGPUInfo() ==>> ', await app.getGPUInfo('complete'))
+      console.log('app.getAppPath("appData") ==>> ', await app.getPath('appData') + '/' + app.getName())
+      console.log('app.getAppPath("module") ==>> ', await app.getPath('module'))
+      console.log('app.getAppPath("exe") ==>> ', await app.getPath('exe'))
+      console.log('app.getAppMetrics() ==>> ', await app.getAppMetrics())
+      console.log('app.getName() ==>> ', await app.getName())
+      console.log('app.getPath("temp") ==>> ', await app.getPath('temp'))
+      
       mainWindow = createWindow('main', {
-        width: 1000,
-        height: 600,
+        width: 1600,
+        height: 800,
         webPreferences: {
+          nodeIntegration: true,
           preload: path.join(__dirname, 'preload.js'),
         },
-        //frame: false,
-        titleBarStyle: 'hidden',
-        //titleBarOverlay: true
+        frame: false,
       })
 
       // Evento para minimizar a janela ao clicar no botão de fechar
@@ -178,7 +183,6 @@ runApp(() => {
       // } catch (e) {
       //   await util.runProcessElevated(app.getAppPath() + '/main/bin/nbfc start &');
       // }
-
       await createTray(mainWindow);
       await setupShortcuts(mainWindow);
 
@@ -193,5 +197,14 @@ runApp(() => {
   ipcMain.on('message', async (event, arg) => {
     event.reply('message', `${arg} World!`)
   })
+
+  ipcMain.on('minimize-window', () => {
+    mainWindow.minimize();
+  });
+
+  ipcMain.on('close-window', () => {
+    mainWindow.close();
+  });
+
 
 });

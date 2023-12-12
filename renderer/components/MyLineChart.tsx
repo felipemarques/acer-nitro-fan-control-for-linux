@@ -30,7 +30,7 @@ const MyLineChart = (props) => {
       width: 3,
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
     },
     fill: {
       opacity: 1,
