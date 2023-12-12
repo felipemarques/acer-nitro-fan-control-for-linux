@@ -1,12 +1,12 @@
 import path from 'path'
-import { app, ipcMain } from 'electron'
+import { app, ipcMain, Menu, Tray } from 'electron'
 import serve from 'electron-serve'
 import { createWindow } from './helpers'
-
 import util from './helpers/util';
 import isElevated from 'native-is-elevated';
 import fixPath from 'fix-path';
 
+import inputEvent from 'input-event';
 import si from 'systeminformation';
 
 // Ensure Electron apps subprocess on macOS and Linux inherit system $PATH
@@ -16,6 +16,9 @@ const isProd = process.env.NODE_ENV === 'production'
 
 console.log('>>>>>>>>>>>>> isProd: ', isProd)
 console.log('>>>>>>>>>>>>> isElevated: ', isElevated())
+
+let tray = null;
+let mainWindow = null;
 
 async function runApp(callback)
 {
@@ -45,7 +48,6 @@ async function runApp(callback)
           .then(data => console.log(data))
           .catch(error => console.error(error));
 
-
         i++;
       }, 2000);
 
@@ -57,6 +59,79 @@ async function runApp(callback)
   typeof(callback) == 'function' ? callback() : null;
 }
 
+async function createTray(mainWindow) {
+
+  try {
+    let icon = path.join(__dirname + '/../') + '/app/Acer-Logo.png';
+
+    tray = new Tray(icon)
+    const contextMenu = Menu.buildFromTemplate([
+      {
+        label: 'Abrir',
+        click: () => {
+          mainWindow.show();
+        },
+      },
+      {
+        label: 'Fechar',
+        click: () => {
+          mainWindow.quit();
+        },
+      },
+      {
+        label: 'Sair',
+        click: () => {
+          // Isso fechará completamente a aplicação
+          app.quit(); 
+          process.exit(0);
+        },
+      },
+    ])
+
+    tray.setToolTip('MM Acer Nitro Fan Control')
+    tray.setContextMenu(contextMenu)
+
+    // Lidar com o clique na bandeja para mostrar a janela
+    let trayClickCount = 0;
+    const trayDoubleClickInterval = 300; // Intervalo para considerar como duplo clique (em milissegundos)
+
+    tray.on('click', () => {
+      trayClickCount++;
+
+      setTimeout(() => {
+        if (trayClickCount === 1) {
+          // Clique único
+          if (mainWindow.isVisible()) {
+            mainWindow.hide();
+          } else {
+            mainWindow.show();
+          }
+        } else if (trayClickCount === 2) {
+          // Duplo clique
+          mainWindow.show();
+        }
+
+        trayClickCount = 0;
+      }, trayDoubleClickInterval);
+    });
+
+
+  } catch(e) {
+    console.error(e)
+  }
+
+}
+
+async function setupShortcuts(mainWindow) {
+  // Substitua '/dev/input/eventX' pelo caminho do dispositivo de entrada correto
+  const keyboard = new inputEvent('/dev/input/by-path/platform-i8042-serio-0-event-kbd');
+  keyboard.on('data', function (event) {
+      if (event.type === 4 && event.code === 4 && event.value === 245) {
+        mainWindow.show();
+      }
+  });
+}
+
 runApp(() => {
 
   if (isProd) {
@@ -66,36 +141,48 @@ runApp(() => {
   }
   
   ;(async () => {
-    await app.whenReady()
-  
-    console.log('app.path ==>> ', app.getAppPath())
-    // console.log('app.getGPUInfo ==>> ', await app.getGPUInfo('complete'))
-      
-    const mainWindow = createWindow('main', {
-      width: 1000,
-      height: 600,
-      webPreferences: {
-        preload: path.join(__dirname, 'preload.js'),
-      },
-      frame: true,
-      //titleBarStyle: 'hidden',
-      //titleBarOverlay: true
-    })
-  
-    if (isProd) {
-      await mainWindow.loadURL('app://./home')
-    } else {
-      const port = process.argv[2]
-      await mainWindow.loadURL(`http://localhost:${port}/home`)
-      //mainWindow.webContents.openDevTools()
-    }
-  
-    // it works
-    // try {
-    //   await util.runProcessElevated(app.getAppPath() + '/main/bin/nbfc status -a && echo 1');
-    // } catch (e) {
-    //   await util.runProcessElevated(app.getAppPath() + '/main/bin/nbfc start &');
-    // }
+
+    app.whenReady().then(async () => {
+
+      //console.log('app.path ==>> ', app.getAppPath())
+      //console.log('app.getGPUInfo ==>> ', await app.getGPUInfo('complete'))
+        
+      mainWindow = createWindow('main', {
+        width: 1000,
+        height: 600,
+        webPreferences: {
+          preload: path.join(__dirname, 'preload.js'),
+        },
+        //frame: false,
+        titleBarStyle: 'hidden',
+        //titleBarOverlay: true
+      })
+
+      // Evento para minimizar a janela ao clicar no botão de fechar
+      mainWindow.on('close', (event) => {
+        event.preventDefault(); // Evitar o fechamento padrão
+        mainWindow.hide(); // Minimizar em vez de fechar
+      });
+    
+      if (isProd) {
+        await mainWindow.loadURL('app://./home')
+      } else {
+        const port = process.argv[2]
+        await mainWindow.loadURL(`http://localhost:${port}/home`)
+        //mainWindow.webContents.openDevTools()
+      }
+    
+      // it works
+      // try {
+      //   await util.runProcessElevated(app.getAppPath() + '/main/bin/nbfc status -a && echo 1');
+      // } catch (e) {
+      //   await util.runProcessElevated(app.getAppPath() + '/main/bin/nbfc start &');
+      // }
+
+      await createTray(mainWindow);
+      await setupShortcuts(mainWindow);
+
+    });
   
   })()
   
@@ -106,6 +193,5 @@ runApp(() => {
   ipcMain.on('message', async (event, arg) => {
     event.reply('message', `${arg} World!`)
   })
-  
 
 });

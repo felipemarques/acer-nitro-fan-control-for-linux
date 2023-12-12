@@ -1,9 +1,11 @@
 {
   "private": true,
-  "name": "my-nextron-app",
-  "description": "My application description",
+  "name": "mm-acer-nitro-fan-control-for-linux",
+  "description": "Acer Nitro Fan Control for Linux",
   "version": "1.0.0",
-  "author": "Yoshihide Shiono <shiono.yoshihide@gmail.com>",
+  "authors": [
+    "Felipe Marques <contato@felipe.marques.com.br>"
+  ],
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
@@ -17,6 +19,7 @@
     "electron-store": "^8.1.0",
     "fix-path": "^3.0.0",
     "flowbite": "^2.2.0",
+    "input-event": "^1.2.6",
     "moment": "^2.29.4",
     "native-is-elevated": "^0.4.3",
     "react-apexcharts": "^1.4.1",

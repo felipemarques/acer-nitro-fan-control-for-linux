@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
-const BrushChart3 = (props) => {
+const MyLineChart = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       // Atualizar estado para manter apenas os últimos 50 pontos
+      
       setData(prevData => [...prevData.slice(-50), [new Date().getTime(), Math.floor(Math.random() * 100)]]);
     }, 1000);
 
@@ -14,7 +15,7 @@ const BrushChart3 = (props) => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const options = {
+  const options:any = {
     chart: {
       id: "chart2",
       type: "line",
@@ -73,4 +74,4 @@ const BrushChart3 = (props) => {
   );
 };
 
-export default BrushChart3;
+export default MyLineChart;
