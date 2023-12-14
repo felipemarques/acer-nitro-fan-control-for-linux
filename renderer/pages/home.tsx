@@ -166,7 +166,7 @@ export default function HomePage() {
       {/*            <Image*/}
       {/*              className={"animate-spin  ml-auto mr-auto"}*/}
       {/*              src="/fan3.png"*/}
-      {/*              alt="fan"*/}
+      {/*              alt="fan-control"*/}
       {/*              width="256px"*/}
       {/*              height="256px"*/}
       {/*            />*/}
@@ -180,9 +180,9 @@ export default function HomePage() {
       {/*            <div className={styles.circleFan}>6000 RPM</div>*/}
 
       {/*            <Image*/}
-      {/*              className={styles.fan + " ml-auto mr-auto"}*/}
+      {/*              className={styles.fan-control + " ml-auto mr-auto"}*/}
       {/*              src="/fan3.png"*/}
-      {/*              alt="fan"*/}
+      {/*              alt="fan-control"*/}
       {/*              width="256px"*/}
       {/*              height="256px"*/}
       {/*            />*/}

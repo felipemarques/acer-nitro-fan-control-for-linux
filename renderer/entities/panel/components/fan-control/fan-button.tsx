@@ -1,6 +1,6 @@
 import { Fan } from "lucide-react";
-import { Text } from "./ui";
-import { cn } from "../lib/utils";
+import { Text } from "../../../../components/ui";
+import { cn } from "../../../../lib/utils";
 import { MouseEvent } from "react";
 
 export function FanButton({

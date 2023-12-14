@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { HStack, VStack } from "./ui";
-import { Text } from "./ui/text";
-import { useFanSpeed } from "../store/use-fan-speed";
+import { useFanSpeed } from "~/store/use-fan-speed";
+import { HStack, Text, VStack } from "~/components/ui";
 
 export function Fans() {
   const { speed } = useFanSpeed();
