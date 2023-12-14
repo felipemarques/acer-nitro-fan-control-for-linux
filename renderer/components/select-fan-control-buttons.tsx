@@ -1,24 +1,37 @@
-import { Fan } from "lucide-react";
-import { HStack } from "./ui/hstack";
-import { Text } from "./text";
-import { useDisclosure } from "../hooks/use-disclosure";
+import { FanButton } from "./fan-button";
+import { useState } from "react";
+
+enum FanControlMode {
+  Auto,
+  Max,
+  Custom,
+}
 
 export function SelectFanControlButtons() {
-  const { isOpen, onToggle } = useDisclosure();
+  const [fanControlMode, setFanControlMode] = useState(FanControlMode.Auto);
+
   return (
     <div className="mt-6 p-4 space-y-8">
-      <HStack className="space-x-2 items-center">
-        <Fan size={32} />
-        <Text>Auto</Text>
-      </HStack>
-      <HStack className="space-x-2 items-center">
-        <Fan size={32} />
-        <Text>Max</Text>
-      </HStack>
-      <HStack className="space-x-2 items-center">
-        <Fan size={32} />
-        <Text>Custom</Text>
-      </HStack>
+      <div className="space-y-4">
+        <FanButton
+          isActive={fanControlMode === FanControlMode.Auto}
+          onClick={() => setFanControlMode(FanControlMode.Auto)}
+        >
+          Auto
+        </FanButton>
+        <FanButton
+          isActive={fanControlMode === FanControlMode.Max}
+          onClick={() => setFanControlMode(FanControlMode.Max)}
+        >
+          Max
+        </FanButton>
+        <FanButton
+          isActive={fanControlMode === FanControlMode.Custom}
+          onClick={() => setFanControlMode(FanControlMode.Custom)}
+        >
+          Custom
+        </FanButton>
+      </div>
     </div>
   );
 }
