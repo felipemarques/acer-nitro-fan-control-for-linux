@@ -164,7 +164,7 @@ export default function HomePage() {
       {/*            <div className={styles.circleFan}>5882 RPM</div>*/}
 
       {/*            <Image*/}
-      {/*              className={styles.fan + " ml-auto mr-auto"}*/}
+      {/*              className={"animate-spin  ml-auto mr-auto"}*/}
       {/*              src="/fan3.png"*/}
       {/*              alt="fan"*/}
       {/*              width="256px"*/}
