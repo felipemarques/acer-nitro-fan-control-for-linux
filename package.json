@@ -25,6 +25,7 @@
     "moment": "^2.29.4",
     "native-is-elevated": "^0.4.3",
     "react-apexcharts": "^1.4.1",
+    "react-spring": "^9.7.3",
     "systeminformation": "^5.21.20",
     "tailwind-merge": "^2.1.0",
     "uuid": "^9.0.1"
