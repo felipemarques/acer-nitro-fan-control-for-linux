@@ -1,8 +1,21 @@
 import Image from "next/image";
 import { HStack, VStack } from "./ui";
 import { Text } from "./ui/text";
+import { useFanSpeed } from "../store/use-fan-speed";
 
 export function Fans() {
+  const { speed } = useFanSpeed();
+
+  function getAnimationBasedOnSpeed() {
+    switch (speed) {
+      case "AUTO":
+      case "CUSTOM":
+        return "animate-spin-slow";
+      case "MAX":
+        return "animate-spin";
+    }
+  }
+
   return (
     <HStack className="flex-1 justify-center">
       <VStack className="relative space-y-2 items-center">
@@ -17,7 +30,7 @@ export function Fans() {
           width={256}
           height={256}
           alt="fan"
-          className="animate-spin-slow"
+          className={getAnimationBasedOnSpeed()}
         />
         <Text>CPU</Text>
       </VStack>
@@ -33,7 +46,7 @@ export function Fans() {
           width={256}
           height={256}
           alt="fan"
-          className="animate-spin-slow"
+          className={getAnimationBasedOnSpeed()}
         />
         <Text>GPU</Text>
       </VStack>
