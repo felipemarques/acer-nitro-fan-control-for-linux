@@ -3,6 +3,10 @@
   "name": "mm-acer-nitro-fan-control-for-linux",
   "description": "Acer Nitro Fan Control for Linux",
   "version": "1.0.0",
+  "author": {
+    "name": "Felipe Marques",
+    "email": "contato@felipemarques.com.br"
+  },
   "authors": [
     "Felipe Marques <contato@felipe.marques.com.br>"
   ],
@@ -24,7 +28,8 @@
     "native-is-elevated": "^0.4.3",
     "react-apexcharts": "^1.4.1",
     "systeminformation": "^5.21.20",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "ws": "^8.15.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",

@@ -1,6 +1,6 @@
-appId: com.example.nextron
+appId: com.acer-fan-control.mmti
 productName: Acer Nitro Fan Control for Linux
-copyright: Copyright © 2018 Yoshihide Shiono
+copyright: Copyright © 2023 Felipe Marques
 directories:
   output: dist
   buildResources: resources

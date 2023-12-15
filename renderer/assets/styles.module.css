@@ -20,8 +20,24 @@
   border: 1px solid silver;
   position: relative;
   float: left;
-  left: 180px;
-  top: 80px;
+  left: 230px;
+  top: 130px;
   z-index: 1000;;
   border-radius: 100%;
+}
+
+.circleFan p {
+  position: relative;
+  top: 2px;
+  font-size: 25px;
+}
+
+.circleFan small:first {
+  position: relative;
+  top: 10px
+}
+
+.circleFan small:last {
+  position: relative;
+  top: 15px
 }

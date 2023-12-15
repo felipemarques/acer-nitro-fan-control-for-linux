@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Chart from "react-apexcharts";
 
 const MyLineChart = (props) => {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      // Atualizar estado para manter apenas os últimos 50 pontos
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     // Atualizar estado para manter apenas os últimos 50 pontos
       
-      setData(prevData => [...prevData.slice(-50), [new Date().getTime(), Math.floor(Math.random() * 100)]]);
-    }, 1000);
+  //     setData(prevData => [
+  //       ...prevData.slice(-50), 
+  //       [new Date().getTime(), Math.floor(Math.random() * 100)]
+  //     ]);
+  //   }, 1000);
 
-    // Limpar o intervalo quando o componente for desmontado
-    return () => clearInterval(intervalId);
-  }, []);
+  //   // Limpar o intervalo quando o componente for desmontado
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   const options:any = {
     chart: {

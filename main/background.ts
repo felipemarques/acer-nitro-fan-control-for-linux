@@ -28,28 +28,42 @@ async function runApp(callback)
       //await util.runProcessElevated(app.getAppPath() + '/main/bin/nbfc status -a && echo 1');
       
       let i = 0;
-      // setTimeout(async () => {
-      //   const nbfcStatus = JSON.parse(await util.runProcess('cat /var/run/nbfc_service.state.json &'));
-      //   console.log('nbfcStatus >>>>>>>>>>>>>>> ' + i);
-      //   console.log('Temperature: ', nbfcStatus.temperature);
-      //   console.log('speed cooler CPU: ', nbfcStatus.fans[0].current_speed);
-      //   console.log('speed cooler GPU: ', nbfcStatus.fans[1].current_speed);
+      setInterval(async () => {
+        const nbfcStatus = JSON.parse(await util.runProcess('cat /var/run/nbfc_service.state.json &'));
+        
+        console.log('nbfcStatus >>>>>>>>>>>>>>> ' + i);
+        console.log('Temperature: ', nbfcStatus.temperature);
+        console.log('speed cooler CPU: ', nbfcStatus.fans[0].current_speed);
+        console.log('speed target CPU: ', nbfcStatus.fans[0].target_speed);
+        console.log('speed steps CPU: ', nbfcStatus.fans[0].speed_steps);
+        console.log('automode CPU: ', nbfcStatus.fans[0].automode);
 
-      //   const status = await util.runProcess('nbfc status -a &');
-      //   console.log('Status ::::::');
-      //   console.log(status);
+        console.log('speed cooler GPU: ', nbfcStatus.fans[1].current_speed);
+        console.log('speed target GPU: ', nbfcStatus.fans[1].target_speed);
+        console.log('speed steps GPU: ', nbfcStatus.fans[1].speed_steps);
+        console.log('automode GPU: ', nbfcStatus.fans[1].automode);
 
-      //   // promises style - new since version 3
-      //   si.cpuTemperature()
-      //     .then(data => console.log(data))
-      //     .catch(error => console.error(error));
 
-      //   si.graphics()
-      //     .then(data => console.log(data))
-      //     .catch(error => console.error(error));
+        const status = await util.runProcess('nbfc status -a &');
+        console.log('Status ::::::');
+        console.log(status);
 
-      //   i++;
-      // }, 2000);
+        // promises style - new since version 3
+        si.cpuTemperature()
+          .then(data => {
+            console.log(data)
+          })
+          .catch(error => console.error(error));
+
+        si.graphics()
+          .then(data => {
+            console.log(data)
+            mainWindow.webContents.send('graphics-stats', data);
+          })
+          .catch(error => console.error(error));
+
+        i++;
+      }, 5000);
 
     } catch (e) {
       console.error(e)
@@ -154,7 +168,7 @@ runApp(() => {
       console.log('app.getPath("temp") ==>> ', await app.getPath('temp'))
       
       mainWindow = createWindow('main', {
-        width: 1600,
+        width: 1240,
         height: 800,
         webPreferences: {
           nodeIntegration: true,
@@ -205,6 +219,5 @@ runApp(() => {
   ipcMain.on('close-window', () => {
     mainWindow.close();
   });
-
 
 });
