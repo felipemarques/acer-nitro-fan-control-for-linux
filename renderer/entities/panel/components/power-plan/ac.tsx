@@ -5,26 +5,26 @@ import { useState } from "react";
 import { acModeIconSize } from "~/entities/panel/components/fan-control/utils/ac-mode-icon-size";
 
 export enum AcMode {
-  PowerSaver = 'Power Saver',
-  Balance = 'Balance',
-  HighPerformance = 'High Performance'
+  PowerSaver = "Power Saver",
+  Balance = "Balance",
+  HighPerformance = "High Performance",
 }
 
 export function Ac() {
-  const [mode, setMode] = useState<AcMode>(AcMode.PowerSaver)
+  const [mode, setMode] = useState<AcMode>(AcMode.PowerSaver);
 
   return (
-    <VStack className={'mt-4 space-y-6'}>
+    <VStack className={"mt-4 space-y-6"}>
       <HStack>
         <SelectButton
           icon={{
-            name: 'Zap',
-            size: acModeIconSize(mode, AcMode.PowerSaver)
+            name: "Zap",
+            size: acModeIconSize(mode, AcMode.PowerSaver),
           }}
           isActive={mode === AcMode.PowerSaver}
           onClick={() => setMode(AcMode.PowerSaver)}
           classNames={{
-            icon: 'animate-none'
+            icon: "animate-none",
           }}
         >
           Power Saver
@@ -33,13 +33,13 @@ export function Ac() {
       <HStack>
         <SelectButton
           icon={{
-            name: 'Zap',
-            size: acModeIconSize(mode, AcMode.Balance)
+            name: "Zap",
+            size: acModeIconSize(mode, AcMode.Balance),
           }}
           isActive={mode === AcMode.Balance}
           onClick={() => setMode(AcMode.Balance)}
           classNames={{
-            icon: 'animate-none'
+            icon: "animate-none",
           }}
         >
           Balance
@@ -48,18 +48,18 @@ export function Ac() {
       <HStack>
         <SelectButton
           icon={{
-            name: 'Zap',
-            size: acModeIconSize(mode, AcMode.HighPerformance)
+            name: "Zap",
+            size: acModeIconSize(mode, AcMode.HighPerformance),
           }}
           isActive={mode === AcMode.HighPerformance}
           onClick={() => setMode(AcMode.HighPerformance)}
           classNames={{
-            icon: 'animate-none'
+            icon: "animate-none",
           }}
         >
           High-Performance
         </SelectButton>
       </HStack>
     </VStack>
-  )
+  );
 }
