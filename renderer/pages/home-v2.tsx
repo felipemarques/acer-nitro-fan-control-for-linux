@@ -5,6 +5,7 @@ import { Fans } from "~/entities/panel/components/fan-control/fans";
 import { Mode } from "~/entities/panel/components/power-plan/mode";
 import { FanControl } from "~/entities/panel/components/fan-control";
 import { PowerPlan } from "~/entities/panel/components/power-plan";
+import { Monitoring } from "~/entities/panel/components/monitoring";
 
 export function HomeV2() {
   return (
@@ -12,12 +13,14 @@ export function HomeV2() {
       <PanelContainer>
         <FanControl />
       </PanelContainer>
-      <HStack>
+      <HStack className={'space-x-3'}>
         <PanelContainer>
           <PowerPlan />
         </PanelContainer>
         <PanelContainer>
-          {/*<PowerPlan />*/}
+          <PanelContainer>
+            <Monitoring />
+          </PanelContainer>
         </PanelContainer>
       </HStack>
     </div>
