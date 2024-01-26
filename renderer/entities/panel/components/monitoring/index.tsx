@@ -9,12 +9,8 @@ export function Monitoring() {
   const [cpuData, setCpuData] = useState([]);
   const [gpuData, setGpuData] = useState([]);
 
-  // Fetch CPU and GPU data and update state
   useEffect(() => {
-    // Fetch or generate CPU and GPU data and update setCpuData and setGpuData
-    // Example:
     const fetchUsageData = async () => {
-      // Simulated data
       const newCpuData = Array.from({ length: 10 }, () => Math.random() * 100);
       const newGpuData = Array.from({ length: 10 }, () => Math.random() * 100);
 
